@@ -1,48 +1,45 @@
 #!/bin/bash
 
-tocopy=""
+server="http://uaf-7.t2.ucsd.edu/~cgeorge"
 
-if [ "$1" == "-d" ]
+if [ "$1" == "--ucsb" ]
 then
-  #Workflow for directory
- if [ -e web_temp_ag_this_is_a_unique_name ] 
- then
-   rm -r web_temp_ag_this_is_a_unique_name
- fi
-  mkdir web_temp_ag_this_is_a_unique_name
-  mkdir web_temp_ag_this_is_a_unique_name/$2
-  for input in "${@:3}"
-  do
-    raw=${input%.*}
-    ext=${input#*.}
-    if [ "$input" == "web_temp_ag_this_is_a_unique_name" ] 
-    then 
-      continue 
-    fi
-    if [ "$ext" == "sh" ]
-    then
-      cp $input web_temp_ag_this_is_a_unique_name/$2/$raw.txt
-    else
-      cp $input web_temp_ag_this_is_a_unique_name/$2/$input
-    fi
-  done
-  scp -r web_temp_ag_this_is_a_unique_name/$2 cag@klong.physics.ucsb.edu:/www/htdocs/people/cag
-  rm -r web_temp_ag_this_is_a_unique_name
-  echo "Posted line at http://hep.ucsb.edu/people/cag/$2"
+  shift 1
+  ucsb="1"
+  server="http://hep.ucsb.edu/people/cag"
+fi
+
+#If a directory is specified
+dir=""
+if [ "$1" == "-d" ] 
+then
+  dir=$2 
+  if [ ! -d ~/public_html/$dir ]; then mkdir -p ~/public_html/$dir; fi
+  n=0; for i in $@; do if [ "$n" -ge "2" ]; then args="$args $i"; fi; n=$(( $n + 1 )); done
+  echo $args
 else
-  #Regular Workflow
-  for input in "$@"
-  do
-    raw=${input%.*}
-    ext=${input#*.}
-    if [ "$ext" == "sh" ]
-    then
-      tocopy="$tocopy $raw.txt"
-      echo "Posted online at http://hep.ucsb.edu/people/cag/$raw.txt"
-    else
-      tocopy="$tocopy $input"
-      echo "Posted online at http://hep.ucsb.edu/people/cag/$input"
-    fi
-  done
-  scp $tocopy cag@klong.physics.ucsb.edu:/www/htdocs/people/cag/
+  args=$@
+fi
+#Regular Workflow
+for input in $args
+do
+  inputName=`echo $input | tr '/' ' ' | awk '{print $NF}'`
+  echo $inputName
+  raw=${input%.*}
+  rawName=${inputName%.*}
+  ext=${input#*.}
+  if [ "$ext" == "sh" ]
+  then
+    tocopy="$tocopy $raw.txt"
+    echo "Posted at $server/$dir/$rawName.txt"
+  else
+    tocopy="$tocopy $input"
+    echo "Posted at $server/$dir/$inputName"
+  fi
+done
+if [ "$ucsb" == "1" ]
+then
+  scp -r $tocopy cag@klong.physics.ucsb.edu:/www/htdocs/people/cag/$dir
+else
+  cp -r $tocopy ~/public_html/$dir
 fi
