@@ -1,1 +1,17 @@
-../scripts/pwdag
+#!/bin/bash
+
+PWD1=`pwd`
+PWD2=$1
+
+if [ -e $PWD1/$PWD2 ] 
+then
+  blah=$PWD1/$PWD2
+  echo `readlink -f $blah`
+else
+  if [ -e $PWD2 ]
+  then 
+    echo `readlink -f $PWD2`
+  else
+    echo "$PWD1/$PWD2 does not exist." 
+  fi
+fi

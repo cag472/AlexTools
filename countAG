@@ -1,0 +1,12 @@
+#! /bin/bash
+
+if [ "$1" == "-h" -o "$1" == "--help" ]; then
+  echo " " 
+  echo "Usage: count [arg]"
+  echo "  returns the number of files in the current directory"
+  echo "  optional arguments are the type of file (*.sh) or location (~/)" 
+  echo " " 
+  exit
+fi
+
+ls -1 $@ 2>/dev/null | wc -l 

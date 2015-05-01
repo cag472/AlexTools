@@ -1,1 +1,21 @@
-../scripts/quad
+#!/bin/bash
+
+if [ "$1" == "-h" -o "$1" == "--help" ]; then
+  echo " " 
+  echo "Usage: quad number1 number2 ..."
+  echo "  Will return numbers added in quadrature"
+  echo " " 
+  exit
+fi
+
+result2=0
+
+for term in "$@"
+do
+result2=`echo "scale = 5; $result2 + $term*$term" | bc`
+done
+
+result=`echo "scale = 5; sqrt( $result2 )" | bc`
+
+echo "$result"
+
