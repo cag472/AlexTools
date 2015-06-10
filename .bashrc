@@ -7,6 +7,8 @@ fi
 alias hadoop='cd /hadoop/cms/store/user/cgeorge'
 alias core='cd /home/users/cgeorge/CORE/'
 alias phys14='cd /hadoop/cms/store/group/snt/phys14'
+alias 25ns='cd /hadoop/cms/store/group/snt/run2_25ns'
+alias 50ns='cd /hadoop/cms/store/group/snt/run2_50ns'
 alias cms3='cd /home/users/cgeorge/CMS3/CMSSW_7_2_0/src/CMS3/NtupleMaker'
 
 #AN Aliases
@@ -25,7 +27,7 @@ alias roooot='root -l -b'
 alias rooooot='root -l -b'
 alias root='root -l'
 alias ev='eval `scramv1 runtime -sh`'
-alias evAG='pushd /home/users/cgeorge/CMS3/CMSSW_7_2_0 &> /dev/null; eval `scramv1 runtime -sh`; popd &> /dev/null'
+alias evAG='pushd /home/users/cgeorge/CMS3/CMSSW_7_4_1_patch1 &> /dev/null; eval `scramv1 runtime -sh`; popd &> /dev/null'
 alias voms='voms-proxy-init -valid 120:00' #-voms cms:/cms'
 alias ls='ls -X --color=auto --ignore=*.{o,d,aux}'
 alias crab3='source /cvmfs/cms.cern.ch/crab3/crab.sh'
@@ -104,9 +106,6 @@ export GLITE_VERSION="gLite-3.2.11-1"
 export LCG_GFAL_INFOSYS=lcg-bdii.cern.ch:2170
 export GLOBUS_TCP_PORT_RANGE=20000,25000
 
-#Pac Setup
-source /home/users/cgeorge/ss2015/PAC/tools/env.sh
-
 # git setup
 git config --global user.name "Christopher A. George"
 git config --global user.email "george@physics.ucsb.edu"
@@ -132,6 +131,10 @@ pathadd(){
       PATH="${PATH:+"$PATH:"}$1"
     fi
 }
+
+#Aliases for slidemaker
+alias table=". table"
+alias slides=". slides" 
 
 #Disable annoying mail messages
 unset MAILCHECK
