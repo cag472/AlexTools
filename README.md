@@ -18,9 +18,13 @@ Transports things to the internet.
   - If you cd to a directory and spell it wrong, it will fix it
   - Suppresses latex bullshit (may need to turn this off to view error messages)
   - Runs root5, alias "evAG" to set up a root6 environment
+  - Automatically runs tmux, which is really awesome
 
 ###whichMissing
   - whichMissing 205 will print the names in the current directory of any number i for which ntuple_i.root or merged_ntuple_i.root does not exist
+
+###.tmux.conf
+  - A sort of ``bashrc'' for tmux.  Most of this is just reducing annoyances, but note that it remaps the prefix from ctrl-b to ctrl-\ (which is really important).  
 
 ###quad
   - adds numbers in quadrature
