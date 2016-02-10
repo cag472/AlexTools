@@ -3,14 +3,25 @@
 PWD1=`pwd`
 PWD2=$1
 
+domain=`uname -a | awk '{print $1}'`
 if [ -e $PWD1/$PWD2 ] 
 then
   blah=$PWD1/$PWD2
-  echo `readlink -f $blah`
+  if [ "$domain" == "Darwin" ]
+  then
+    echo `greadlink -f $blah`
+  else
+    echo `readlink -f $blah`
+  fi
 else
   if [ -e $PWD2 ]
   then 
-    echo `readlink -f $PWD2`
+    if [ "$domain" == "Darwin" ]
+    then
+      echo `greadlink -f $PWD2`
+    else
+      echo `readlink -f $PWD2`
+    fi
   else
     echo "$PWD1/$PWD2 does not exist." 
   fi
