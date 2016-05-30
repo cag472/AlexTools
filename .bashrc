@@ -76,4 +76,4 @@ export CLICOLOR=TRUE
 
 #Git stuff
 git config --global user.name "Alex George"
-git config --global user.email alex.george@bostonfusion.comm
+git config --global user.email "alex.george@bostonfusion.com"
