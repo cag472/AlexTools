@@ -1,41 +1,3 @@
-#Source global definitions
-if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
-fi
-
-#Movement Aliases
-alias hadoop='cd /hadoop/cms/store/user/cgeorge'
-alias core='cd /home/users/cgeorge/CORE/'
-alias phys14='cd /hadoop/cms/store/group/snt/phys14'
-alias 25ns='cd /hadoop/cms/store/group/snt/run2_25ns'
-alias 50ns='cd /hadoop/cms/store/group/snt/run2_50ns'
-alias cms3='cd /home/users/cgeorge/CMS3/CMSSW_7_2_0/src/CMS3/NtupleMaker'
-
-#Other Aliases
-alias lxplus='ssh cgeorge@lxplus.cern.ch'
-alias rooot='root -l -b'
-alias rot='root -l -b -q'
-alias roooot='root -l -b'
-alias rooooot='root -l -b'
-alias root='root -l'
-alias ev='eval `scramv1 runtime -sh`'
-alias evAG='pushd /home/users/cgeorge/CMS3/CMSSW_7_4_1_patch1 &> /dev/null; eval `scramv1 runtime -sh`; popd &> /dev/null'
-alias voms='voms-proxy-init -valid 120:00' 
-alias ls='ls -X --color=auto --ignore=*.{o,d,aux}'
-alias crab3='source /cvmfs/cms.cern.ch/crab3/crab.sh'
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-alias .....='cd ../../../..'
-alias ......='cd ../../../../..'
-alias .......='cd ../../../../../..'
-alias ........='cd ../../../../../../..'
-alias .........='cd ../../../../../../../..'
-alias ..........='cd ../../../../../../../..'
-
-#Set up pdflatex to supress stupid warnings
-alias pdflatex='pdflatex -interaction=batchmode'
-
 #Fix vi
 vi() {
 
@@ -71,11 +33,6 @@ vi() {
     fi
 }
 
-r() {
-    (($# == 2)) || { echo "r needs to args" >&2 ; return 1 ;}
-    fc -s "$1"="$2"
-}
-
 #Fix spelling errors for cd
 shopt -s cdspell
 
@@ -86,47 +43,37 @@ export HISTFILESIZE=30000
 export HISTTIMEFORMAT='%F %T '
 export HISTCONTROL=ignoredups
 
-eval $(dircolors -b ~/.dir_colors)
+#Aliases
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
+alias .......='cd ../../../../../..'
+alias ........='cd ../../../../../../..'
+alias .........='cd ../../../../../../../..'
+alias ..........='cd ../../../../../../../..'
 
-#CMSSW
-source /code/osgcode/cmssoft/cmsset_default.sh  > /dev/null 2>&1
-export SCRAM_ARCH=slc6_amd64_gcc481
-export SCRAM_ARCH1=slc6_amd64_gcc491
+#More aliases
+alias preview='open /Applications/Preview.app'
 
-#Crab
-export GLITE_VERSION="gLite-3.2.11-1"
-export LCG_GFAL_INFOSYS=lcg-bdii.cern.ch:2170
-export GLOBUS_TCP_PORT_RANGE=20000,25000
-
-# git setup
-git config --global user.name "Christopher A. George"
-git config --global user.email "george@physics.ucsb.edu"
-git config --global alias.co checkout
-git config --global alias.ci 'commit -a -m'
-git config --global alias.pu 'push origin master'
-git config --global alias.up 'pull origin master'
-git config --global alias.unstage 'reset HEAD'
-
-#Root Config
-source /code/osgcode/fgolf/5.30-patches/bin/thisroot.sh
-
-#Load Python preferences
-export PYTHONSTARTUP=$HOME/.pythonrc
-
-#Put Scripts Directory into Path
-PATH=$PATH:$HOME/scripts
-
-#Add path
-pathadd(){
-    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]
-    then
-      PATH="${PATH:+"$PATH:"}$1"
-    fi
+#Fix R
+r(){
+  if [ "$#" == "0" ]; then command r --no-save; else command Rscript $1 ; fi
 }
 
-#Aliases for slidemaker
-alias table=". table"
-alias slides=". slides" 
+#Path
+PATH=$PATH:/Users/alexgeorge/Applications/pypy-5.1.1-osx64/bin/:/Users/alexgeorge/CODE/scripts/
+export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:/usr/include/python2.7/
+export PYTHONPATH=/Users/alexgeorge/.local/lib/python2.7/site-packages/
+export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:$PKG_CONFIG_PATH
 
-#Disable annoying mail messages
-unset MAILCHECK
+#Show full path
+PS1='\w\$ '
+
+#Color scheme
+export CLICOLOR=TRUE
+
+#Git stuff
+git config --global user.name "Alex George"
+git config --global user.email alex.george@bostonfusion.comm

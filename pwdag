@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#Note!  If on mac, will have to do "brew install coreutils" (this may itself require installing brew).  
+
 PWD1=`pwd`
 PWD2=$1
 
