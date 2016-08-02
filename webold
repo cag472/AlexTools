@@ -1,0 +1,45 @@
+#!/bin/bash
+
+server="http://uaf-7.t2.ucsd.edu/~cgeorge"
+
+if [ "$1" == "--ucsb" ]
+then
+  shift 1
+  ucsb="1"
+  server="http://hep.ucsb.edu/people/cag"
+fi
+
+#If a directory is specified
+dir=""
+if [ "$1" == "-d" ] 
+then
+  dir=$2 
+  if [ ! -d ~/public_html/$dir ]; then mkdir -p ~/public_html/$dir; fi
+  n=0; for i in $@; do if [ "$n" -ge "2" ]; then args="$args $i"; fi; n=$(( $n + 1 )); done
+  echo $args
+else
+  args=$@
+fi
+#Regular Workflow
+for input in $args
+do
+  inputName=`echo $input | tr '/' ' ' | awk '{print $NF}'`
+  echo $inputName
+  raw=${input%.*}
+  rawName=${inputName%.*}
+  ext=${input#*.}
+  if [ "$ext" == "sh" ]
+  then
+    tocopy="$tocopy $raw.txt"
+    echo "Posted at $server/$dir/$rawName.txt"
+  else
+    tocopy="$tocopy $input"
+    echo "Posted at $server/$dir/$inputName"
+  fi
+done
+if [ "$ucsb" == "1" ]
+then
+  scp -r $tocopy cag@klong.physics.ucsb.edu:/www/htdocs/people/cag/$dir
+else
+  cp -r $tocopy ~/public_html/$dir
+fi

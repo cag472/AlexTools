@@ -1,45 +1,93 @@
 #!/bin/bash
 
-server="http://uaf-7.t2.ucsd.edu/~cgeorge"
+HOST='bostonfusion.com'
+USER='alexgeorge@bostonfusion.com'
+PASSWD=`cat ~/.passwd/ftp_pw`
 
-if [ "$1" == "--ucsb" ]
-then
-  shift 1
-  ucsb="1"
-  server="http://hep.ucsb.edu/people/cag"
-fi
+#Cut up username
+theuser=`echo $USER | tr '@' ' ' | awk '{print $1}'`
 
-#If a directory is specified
-dir=""
-if [ "$1" == "-d" ] 
-then
-  dir=$2 
-  if [ ! -d ~/public_html/$dir ]; then mkdir -p ~/public_html/$dir; fi
-  n=0; for i in $@; do if [ "$n" -ge "2" ]; then args="$args $i"; fi; n=$(( $n + 1 )); done
-  echo $args
-else
-  args=$@
-fi
-#Regular Workflow
-for input in $args
-do
-  inputName=`echo $input | tr '/' ' ' | awk '{print $NF}'`
-  echo $inputName
-  raw=${input%.*}
-  rawName=${inputName%.*}
-  ext=${input#*.}
-  if [ "$ext" == "sh" ]
-  then
-    tocopy="$tocopy $raw.txt"
-    echo "Posted at $server/$dir/$rawName.txt"
-  else
-    tocopy="$tocopy $input"
-    echo "Posted at $server/$dir/$inputName"
-  fi
+# Initialize our own variables:
+delete=false
+verbose=0
+keep=false
+deleteall=false
+
+while getopts "hdD" opt; do
+    case "$opt" in
+    h|\?)
+        show_help
+        exit 0
+        ;;
+    d)  delete=true
+        ;;
+    D)  deleteall=true
+        ;;
+    k)  keep=true
+        ;;
+    esac
 done
-if [ "$ucsb" == "1" ]
+
+shift $((OPTIND-1))
+
+#Safety Check
+if [[ $deleteall == true ]]
 then
-  scp -r $tocopy cag@klong.physics.ucsb.edu:/www/htdocs/people/cag/$dir
-else
-  cp -r $tocopy ~/public_html/$dir
+  read -p "This will delete ALL web files not in the keep directory.  Are you sure? (y/n)" -n 1 -r
+  echo    
+  if  [[ $REPLY =~ ^[Yy]$ ]]
+  then
+    :
+  else 
+    echo "exiting, you coward."
+    exit 1 
+  fi
+fi
+
+#Do it
+if [[ $deleteall == true ]]
+then
+ftp -n -v $HOST << EOT
+ascii
+user $USER $PASSWD
+prompt
+mdelete *
+bye
+EOT
+elif [[ $delete == true ]] && [[ $keep == false ]]
+then
+ftp -n -v $HOST << EOT
+ascii
+user $USER $PASSWD
+delete "$1"
+bye
+EOT
+elif [[ $delete == false ]] && [[ $keep == false ]]
+then
+ftp -n -v $HOST << EOT
+ascii
+user $USER $PASSWD
+put "$1"
+bye
+EOT
+echo ""
+echo "Posted at http://www.bostonfusion.com/$theuser/$1"
+elif [[ $delete == true ]] && [[ $keep == true ]]
+then
+ftp -n -v $HOST << EOT
+ascii
+user $USER $PASSWD
+cd keep
+delete "$1"
+bye
+EOT
+elif [[ $delete == false ]] && [[ $keep == false ]]
+then
+ftp -n -v $HOST << EOT
+ascii
+user $USER $PASSWD
+cd delete
+put "$1"
+bye
+EOT
 fi
