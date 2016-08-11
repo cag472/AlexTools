@@ -12,7 +12,7 @@ import atexit
 import os
 import readline
 
-historyPath = os.path.expanduser("~/.pyhistory")
+historyPath = os.path.expanduser("/Users/alexgeorge/.pyhistory")
 
 def save_history(historyPath=historyPath):
     import readline

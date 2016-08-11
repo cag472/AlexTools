@@ -1,0 +1,17 @@
+#!/usr/bin/env python
+
+import pickle, sys, os
+
+thefile = sys.argv[1]
+if not os.path.exists(thefile):
+  print "Error: file", thefile, "does not exist."
+else:
+  a = pickle.load(open(thefile, "rb"))
+  if (type(a) == list):
+    for i in range(len(a)):
+      print a[i]
+  elif (type(a) == dict):
+    for key, value in a.iteritems():
+      print key, ":", value 
+  else:
+    print a

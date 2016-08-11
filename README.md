@@ -11,6 +11,7 @@ These are the tools that mostly live in Alex's script directory.  Listed here in
   - If you try to "vi" a file that doesn't exist, it will complain (override with -n) rather than opening a blank file
   - If you cd to a directory and spell it wrong, it will fix it
   - Fixes r so you can run files normally
+  - Use "r" to execute any program, regardless of language.  With no arguments, it opens an interactive r session.
 
 ###quad
   - adds numbers in quadrature
