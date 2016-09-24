@@ -59,10 +59,13 @@ alias preview='open /Applications/Preview.app'
 alias gedit='open /opt/homebrew-cask/Caskroom/gedit/3.2.6-3/gedit.app'
 alias iv='vi'
 alias amazon='ssh -i ~/Code/STARTER/webapp/starter.pem ec2-user@54.235.227.179'
+alias umimmi='cd ~/Google\ Drive/BostonCommon/Projects/5033-001\ UMIMMI'
+alias uc2='cd ~/Google\ Drive/BostonCommon/Projects/5030-001\ \(UC\)2\ PhII'
+alias starter='cd ~/Google\ Drive/BostonCommon/Projects/5024-001\ STARTER\ PhII'
 
 #Fix R
 r1(){
-  if [ "$#" == "0" ]; then command r --no-save; else command Rscript $1 ; fi
+  if [ "$#" == "0" ]; then command r --no-save; else command Rscript $@ ; fi
 }
 
 #Path
@@ -101,5 +104,26 @@ r(){
     ext="${1##*.}"
     if [ "$ext" == "R" ] ; then r1     $@ ; fi
     if [ "$ext" == "py" ]; then python $@ ; fi
+  fi
+}
+
+cppag(){
+  g++ $@
+  ./a.out
+}
+
+latex(){
+  a=`pdflatex -halt-on-error $1` 
+  nameAG=`echo $a | awk '{print $(NF-8)}' | tr '.' ' ' | awk '{print $1}'`
+  typeAG=`echo $a | awk '{print $(NF-8)}' | tr '.' ' ' | awk '{print $2}'`
+  if [ "$typeAG" == "pdf" ]
+  then
+    echo "Success!"
+  elif [ "$typeAG" == "dvi" ]
+  then
+    dvipdf $nameAG.dvi $nameAG.pdf
+    echo "Success!"
+  else
+    echo $a | awk '{ s = ""; for (i = NF-40; i <= NF; i++) s = s $i " "; print s }'
   fi
 }
