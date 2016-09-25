@@ -1,17 +1,40 @@
 #!/usr/bin/env python
 
 import pickle, sys, os
+import numpy as np
+import marshal as m
 
 thefile = sys.argv[1]
 if not os.path.exists(thefile):
   print "Error: file", thefile, "does not exist."
-else:
+elif (thefile[-4:] == ".pkl"): 
   a = pickle.load(open(thefile, "rb"))
   if (type(a) == list):
     for i in range(len(a)):
       print a[i]
+    try: print "dimensions", len(a), "x", len(a[0])
+    except: print len(a)
   elif (type(a) == dict):
     for key, value in a.iteritems():
       print key, ":", value 
   else:
     print a
+    try: print "dimensions", len(a), "x", len(a[0])
+    except: print "length", len(a)
+elif (thefile[-4:] == ".npz"): 
+  a = np.load(thefile)
+  print sys.argv
+  if (len(sys.argv) == 2):
+    for f, x in a.items():
+      print(f)
+  else:
+    b = a[sys.argv[2]] 
+    print b
+    print len(b)
+elif (thefile[-4:] == ".mar"): 
+  a = m.load(open(thefile, "rb"))
+  print a
+  if (len(a) > 1):
+    for i in range(len(a)):
+      print a[i]
+  print len(a)

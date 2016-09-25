@@ -11,6 +11,9 @@
 import atexit
 import os
 import readline
+import statistics as stat
+import numpy as np
+import math
 
 historyPath = os.path.expanduser("/Users/alexgeorge/.pyhistory")
 
