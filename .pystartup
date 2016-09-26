@@ -14,6 +14,7 @@ import readline
 import statistics as stat
 import numpy as np
 import math
+import pickle
 
 historyPath = os.path.expanduser("/Users/alexgeorge/.pyhistory")
 
