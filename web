@@ -47,7 +47,7 @@ fi
 #Do it
 if [[ $deleteall == true ]]
 then
-ftp -n -v $HOST << EOT
+ftp -p -n -v $HOST << EOT
 ascii
 user $USER $PASSWD
 prompt
@@ -56,7 +56,7 @@ bye
 EOT
 elif [[ $delete == true ]] && [[ $keep == false ]]
 then
-ftp -n -v $HOST << EOT
+ftp -p -n -v $HOST << EOT
 ascii
 user $USER $PASSWD
 delete "$1"
@@ -64,7 +64,7 @@ bye
 EOT
 elif [[ $delete == false ]] && [[ $keep == false ]]
 then
-ftp -n -v $HOST << EOT
+ftp -p -n -v $HOST << EOT
 ascii
 user $USER $PASSWD
 put "$1"
@@ -74,7 +74,7 @@ echo ""
 echo "Posted at http://www.bostonfusion.com/$theuser/$1"
 elif [[ $delete == true ]] && [[ $keep == true ]]
 then
-ftp -n -v $HOST << EOT
+ftp -p -n -v $HOST << EOT
 ascii
 user $USER $PASSWD
 cd keep
@@ -83,7 +83,7 @@ bye
 EOT
 elif [[ $delete == false ]] && [[ $keep == false ]]
 then
-ftp -n -v $HOST << EOT
+ftp -p -n -v $HOST << EOT
 ascii
 user $USER $PASSWD
 cd delete
