@@ -56,12 +56,18 @@ alias ..........='cd ../../../../../../../..'
 
 #More aliases
 alias preview='open /Applications/Preview.app'
+alias inkscape='/Applications/Inkscape.app/Contents/Resources/bin/inkscape'
+alias teamviewer='open /Applications/TeamViewer.app'
+alias tv='open /Applications/TeamViewer.app'
 alias gedit='open /opt/homebrew-cask/Caskroom/gedit/3.2.6-3/gedit.app'
 alias iv='vi'
 alias amazon='ssh -i ~/Code/STARTER/webapp/starter.pem ec2-user@54.235.227.179'
 alias umimmi='cd ~/Google\ Drive/BostonCommon/Projects/5033-001\ UMIMMI'
 alias uc2='cd ~/Google\ Drive/BostonCommon/Projects/5030-001\ \(UC\)2\ PhII'
 alias starter='cd ~/Google\ Drive/BostonCommon/Projects/5024-001\ STARTER\ PhII'
+alias bdn='ssh nazgul@barad-dur.local'
+alias bds='ssh sauron@barad-dur.local'
+alias cling='/Users/alexgeorge/Code/scripts/cling-build/builddir/bin/cling'
 
 #Fix R
 r1(){
@@ -71,7 +77,8 @@ r1(){
 #Path
 PATH=$PATH:/Users/alexgeorge/Applications/pypy-5.1.1-osx64/bin/:/Users/alexgeorge/CODE/scripts/
 export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:/usr/include/python2.7/
-export PYTHONPATH=/Users/alexgeorge/.local/lib/python2.7/site-packages/
+#export PYTHONPATH=/Library/Python/2.7/site-packages:/Users/alexgeorge/.local/lib/python2.7/site-packages/:~/Code/AlexTools
+export PYTHONPATH=/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages:/Users/alexgeorge/Code/pybfc:/Users/alexgeorge/Code/pybfc2:/Users/alexgeorge/CODE/scripts/
 export PYTHONSTARTUP=~/.pystartup
 export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:$PKG_CONFIG_PATH
 
@@ -103,7 +110,16 @@ r(){
   else 
     ext="${1##*.}"
     if [ "$ext" == "R" ] ; then r1     $@ ; fi
-    if [ "$ext" == "py" ]; then python $@ ; fi
+    if [ "$ext" == "py" ] 
+    then 
+      firstLine=`more $1 | head -1 | tr '/' ' ' | awk '{print $NF}'`
+      if [ "$firstLine" == "python3" ]
+      then
+        python3 $@ 
+      else
+        python $@
+      fi
+    fi
   fi
 }
 
@@ -127,3 +143,7 @@ latex(){
     echo $a | awk '{ s = ""; for (i = NF-40; i <= NF; i++) s = s $i " "; print s }'
   fi
 }
+
+#For sparql
+export JENA_HOME=/Users/alexgeorge/Code/STARTER/entityTest/apache-jena-3.1.0
+alias sparql="$JENA_HOME/bin/sparql"
