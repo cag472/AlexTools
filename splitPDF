@@ -1,0 +1,22 @@
+#!/bin/bash
+
+echo $1
+echo $2
+echo $3
+echo $4
+
+if [ "$1" == "-h" -o "$1" == "--help" ]; then
+  echo " " 
+  echo "Usage: splitPDF inputName outputName.pdf firstPage lastPage"
+  echo "  outputName can have the .pdf extension or not."  
+  echo " " 
+  exit
+elif [ "$#" -gt 4 ]; then
+  echo "Too many arguments! Run with -h for help"
+else
+  TEMP=(`echo $2 | tr '.' ' '`)
+  RAW=${TEMP[0]} 
+  echo $RAW
+  yes | gs -dBATCH -sOutputFile=$RAW.pdf -dFirstPage=$3 -dLastPage=$4 -sDEVICE=pdfwrite "$1"
+fi
+
