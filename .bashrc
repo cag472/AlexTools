@@ -66,7 +66,7 @@ alias umimmi='cd ~/Google\ Drive/BostonCommon/Projects/5033-001\ UMIMMI'
 alias uc2='cd ~/Google\ Drive/BostonCommon/Projects/5030-001\ \(UC\)2\ PhII'
 alias starter='cd ~/Google\ Drive/BostonCommon/Projects/5024-001\ STARTER\ PhII'
 alias bdn='ssh nazgul@barad-dur.local'
-alias bds='ssh sauron@barad-dur.local'
+alias bdsh='ssh sauron@192.168.2.225'
 alias cling='/Users/alexgeorge/Code/scripts/cling-build/builddir/bin/cling'
 
 #Fix R
@@ -75,10 +75,9 @@ r1(){
 }
 
 #Path
-PATH=$PATH:/Users/alexgeorge/Applications/pypy-5.1.1-osx64/bin/:/Users/alexgeorge/CODE/scripts/
+PATH=$PATH:/Users/alexgeorge/CODE/scripts/
 export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:/usr/include/python2.7/
 #export PYTHONPATH=/Library/Python/2.7/site-packages:/Users/alexgeorge/.local/lib/python2.7/site-packages/:~/Code/AlexTools
-export PYTHONPATH=/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages:/Users/alexgeorge/Code/pybfc:/Users/alexgeorge/Code/pybfc2:/Users/alexgeorge/CODE/scripts/
 export PYTHONSTARTUP=~/.pystartup
 export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:$PKG_CONFIG_PATH
 
@@ -86,7 +85,7 @@ export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:$PKG_CONFIG_PATH
 PS1='\w\$ '
 
 #Color scheme
-export CLICOLOR=TRUE
+#export CLICOLOR=TRUE
 
 #Set up SQL
 export PATH=$PATH:/usr/local/mysql/bin/
@@ -106,7 +105,7 @@ git config --global user.email "alex.george@bostonfusion.com"
 #Run function
 r(){
   if [ "$#" == "0" ]
-  then command r --no-save 
+  then command r --no-save -q 
   else 
     ext="${1##*.}"
     if [ "$ext" == "R" ] ; then r1     $@ ; fi
@@ -147,3 +146,12 @@ latex(){
 #For sparql
 export JENA_HOME=/Users/alexgeorge/Code/STARTER/entityTest/apache-jena-3.1.0
 alias sparql="$JENA_HOME/bin/sparql"
+
+#docker
+alias deleteAllDocker='docker rm $(docker ps -a -q -f status=exited)'
+
+alias bds="XAUTHORITY=/storage/xauth/sauron/.Xauthority ssh -Y sauron@barad-dur.local"
+
+export PATH="/usr/local/opt/curl/bin:$PATH"
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/4.2.1/
