@@ -155,3 +155,5 @@ alias bds="XAUTHORITY=/storage/xauth/sauron/.Xauthority ssh -Y sauron@barad-dur.
 export PATH="/usr/local/opt/curl/bin:$PATH"
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/4.2.1/
+
+alias whosudo='getent group sudo | cut -d: -f4'
