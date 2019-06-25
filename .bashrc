@@ -65,9 +65,11 @@ alias amazon='ssh -i ~/Code/STARTER/webapp/starter.pem ec2-user@54.235.227.179'
 alias umimmi='cd ~/Google\ Drive/BostonCommon/Projects/5033-001\ UMIMMI'
 alias uc2='cd ~/Google\ Drive/BostonCommon/Projects/5030-001\ \(UC\)2\ PhII'
 alias starter='cd ~/Google\ Drive/BostonCommon/Projects/5024-001\ STARTER\ PhII'
-alias bdn='ssh nazgul@barad-dur.local'
-alias bdsh='ssh sauron@192.168.2.225'
-alias cling='/Users/alexgeorge/Code/scripts/cling-build/builddir/bin/cling'
+alias bds="XAUTHORITY=/storage/xauth/sauron/.Xauthority ssh -Y sauron@192.168.2.225"
+alias akb="ssh -Y george@192.168.2.251"
+alias whosudo='getent group sudo | cut -d: -f4'
+alias hn='hostname'
+alias ls='ls -G'
 
 #Fix R
 r1(){
@@ -86,6 +88,7 @@ PS1='\w\$ '
 
 #Color scheme
 #export CLICOLOR=TRUE
+export LSCOLORS="dxfxhxhxgx"
 
 #Set up SQL
 export PATH=$PATH:/usr/local/mysql/bin/

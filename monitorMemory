@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#Check the memory
+memUsed=`free -g | head -2 | tail -1 | awk '{print $3}'`
+
+#Check the last time we sent a mail
+currentTime=`date +%s`
+if [ "$lastMail" == "" ]; then export lastMail=0 ; fi
+timeSinceLast=$(( $currentTime - $lastMail ))
+
+if (( $timeSinceLast > 3600 )) && (( $memUsed > 115 ))
+then
+  rm /tmp/memoryLog.txt
+  touch /tmp/memoryLog.txt
+  echo "Top few users are:" >> /tmp/memoryLog.txt
+  for n in `seq 1 15`
+  do
+    text=`ps aux --sort -%mem | head -$n | tail -1` 
+    echo "$text \n" >> /tmp/memoryLog.txt
+  done
+  mpack -s "Crisis on barad-dur memory!" -d /tmp/memoryLog.txt /tmp/memoryLog.txt alex.george@bostonfusion.com
+  export lastMail=$currentTime
+#else
+#  echo "Not sending a mail"
+#  echo "Time since last: (( $timeSinceLast > 3600 ))"
+#  echo "Memory used is $memUsed"
+fi
