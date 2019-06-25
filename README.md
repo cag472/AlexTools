@@ -23,6 +23,11 @@ These are the tools that mostly live in Alex's script directory.  Listed here in
   - merges PDF
   - mergePDF --help to display help message 
 
+###monitorMemory
+  - e-mails me an alert when the system memory usage exceeds 115 GB
+  - add this to /etc/crontab: `*/5 *   * * *   root    . /home/sauron/AlexTools/monitorMemory`
+  - need to set up e-mail account (burner) at `/etc/ssmtp/ssmtp.conf`, don't forget to set `UseSTARTTLS=YES`
+
 ###whichMissing (deprecated)
   - whichMissing 205 will print the names in the current directory of any number i for which ntuple\_i.root or merged\_ntuple\_i.root does not exist
   - Deprecated for now, but might be useful for other patterns
@@ -37,3 +42,4 @@ Transports things to the internet.
 ###.tmux.conf (partially deprecated)
   - A sort of ``bashrc'' for tmux.  Most of this is just reducing annoyances, but note that it remaps the prefix from ctrl-b to ctrl-\ (which is really important).  
   - I don't use tmux much anymore, it's annoying, I should figure it out one day.  
+
