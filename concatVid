@@ -1,0 +1,31 @@
+#!/usr/bin/python3
+
+import argparse 
+import natsort
+import os
+
+def parse_args():
+  parser = argparse.ArgumentParser()
+  parser.add_argument('number', type=int)
+  args = parser.parse_args()
+  return vars(args)
+
+#Get the arguments
+args = parse_args() 
+
+#List the files
+os.remove("temp.txt")
+all_files = os.listdir(".")
+the_files = natsort.natsorted([x for x in all_files if x[:6] == "LQLVMR" and str(args['number']) in x])
+
+#Derive the new name 
+new_name = "LQLVMR_" + ("0" if args['number'] < 10 else "") + ("0" if args['number'] < 100 else "") + str(args['number']) + "_" + the_files[0].split('_')[-1] 
+print "The new name is: " + new_name
+
+#Write the files
+for x in the_files: os.system("echo " + 'file \\\'' + str(x) + "\\\' >> temp.txt")
+
+#Concatenate 
+command = "ffmpeg -f concat -safe 0 -i temp.txt -c copy " + new_name
+#print "The command is: ", command
+os.system(command)

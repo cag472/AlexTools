@@ -1,0 +1,58 @@
+#!/usr/bin/python3
+
+from datetime import timedelta
+import argparse
+import os 
+
+def parse_args():
+  ap = argparse.ArgumentParser()
+  ap.add_argument("input", type=str)
+  return vars(ap.parse_args())
+
+args = parse_args()
+
+season = args['input'].split('_s')[1].split('_')[0]
+episode_range = args['input'].split('_e')[1].split('.')[0]
+episode_first = int(args['input'].split('_e')[1].split('.')[0].split('-')[0])
+episode_last = int(args['input'].split('_e')[1].split('.')[0].split('-')[1])
+episodes = range(episode_first, episode_last+1)
+episodes = [(str(x) if len(str(x)) > 1 else "0" + str(x)) for x in episodes]
+#episodes_ = ['co1', 'co2']
+#episodes_.extend(episodes)
+#episodes = episodes_
+print(episodes)
+
+times = ['00:00:00', '00:42:37', '01:23:51']
+
+def convert_to_hours(seconds):
+  seconds = seconds.seconds
+  seconds = seconds//3600
+  seconds = str(seconds)
+  if len(seconds) == 1: seconds = "0" + seconds
+  return seconds
+
+def convert_to_minutes(seconds):
+  seconds = seconds.seconds
+  seconds = seconds - 3600.*(seconds//3600)
+  seconds = seconds//60.
+  seconds = int(seconds)
+  seconds = str(seconds)
+  if len(seconds) == 1: seconds = "0" + seconds
+  return seconds
+
+def convert_to_seconds(seconds):
+  seconds = seconds.seconds
+  seconds = seconds - 3600.*(seconds//3600)
+  seconds = seconds - 60.*(seconds//60)
+  seconds = int(seconds)
+  seconds = str(seconds)
+  if len(seconds) == 1: seconds = "0" + seconds
+  return seconds
+
+for i in range(len(episodes)):
+  start_time = timedelta(hours=int(times[i].split(':')[0]), minutes=int(times[i].split(':')[1]), seconds=int(times[i].split(':')[2]))
+  end_time = timedelta(hours=int(times[i+1].split(':')[0]), minutes=int(times[i+1].split(':')[1]), seconds=int(times[i+1].split(':')[2]))
+  duration = end_time - start_time 
+  command = ('ffmpeg -i %s -acodec copy -vcodec copy -ss %s:%s:%s -t %s:%s:%s svu_s%s_e%s.mpg' % (args['input'], convert_to_hours(start_time), convert_to_minutes(start_time), convert_to_seconds(start_time), convert_to_hours(duration), convert_to_minutes(duration), convert_to_seconds(duration), season, episodes[i]))
+  #print(command)
+  os.system(command)
