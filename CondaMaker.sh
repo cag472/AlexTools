@@ -12,7 +12,11 @@ conda install python=3.10
 conda install -c conda-forge pytorch-gpu torchvision==0.12 
 
 #General stuff
-conda install pyyaml
+conda install pyyaml gitpython pandas pip pydeprecate
 
 #Cartopy and map stuff
-conda install cartopy geons cairo pyyaml haversine netcdf4 
+conda install cartopy geos cairo haversine netcdf4 
+
+#Other ML stuff
+#This will probably install the CPU version of Tensorflow. But that's OK, I never use Tensorflow anyway. 
+conda install scikit-image scikit-learn keras scipy tensorflow torchaudio tensorboard pytorch-lightning lightning-bolts
