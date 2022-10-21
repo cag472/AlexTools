@@ -25,4 +25,4 @@ conda install -c anaconda flask
 conda install scikit-image scikit-learn keras scipy tensorflow torchaudio tensorboard pytorch-lightning lightning-bolts cleanlab doubtlab 
 
 #Other stuff
-conda install rasterio osgeo 
+conda install rasterio osgeo numba jsonschema
