@@ -24,5 +24,8 @@ conda install -c anaconda flask
 #This will probably install the CPU version of Tensorflow. But that's OK, I never use Tensorflow anyway. 
 conda install scikit-image scikit-learn keras scipy tensorflow torchaudio tensorboard pytorch-lightning lightning-bolts cleanlab doubtlab 
 
+#Dash
+conda install dash plotly 
+
 #Other stuff
 conda install rasterio osgeo numba jsonschema
