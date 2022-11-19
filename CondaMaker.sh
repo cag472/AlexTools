@@ -22,7 +22,7 @@ conda install -c anaconda flask
 
 #Other ML stuff
 #This will probably install the CPU version of Tensorflow. But that's OK, I never use Tensorflow anyway. 
-conda install scikit-image scikit-learn keras scipy tensorflow torchaudio tensorboard pytorch-lightning lightning-bolts cleanlab doubtlab 
+conda install scikit-image scikit-learn keras scipy tensorflow torchaudio tensorboard pytorch-lightning lightning-bolts cleanlab doubtlab faiss-cpu
 
 #Dash
 conda install dash plotly dash-bootstrap-components
