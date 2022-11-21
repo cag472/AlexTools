@@ -25,7 +25,7 @@ conda install -c anaconda flask
 conda install scikit-image scikit-learn keras scipy tensorflow torchaudio tensorboard pytorch-lightning lightning-bolts cleanlab doubtlab faiss-cpu
 
 #Dash
-conda install dash plotly dash-bootstrap-components
+conda install dash plotly dash-bootstrap-components flask_caching
 
 #Other stuff
 conda install rasterio osgeo numba jsonschema
