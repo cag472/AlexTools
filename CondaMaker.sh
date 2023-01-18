@@ -28,4 +28,4 @@ conda install scikit-image scikit-learn keras scipy tensorflow torchaudio tensor
 conda install dash plotly dash-bootstrap-components flask_caching
 
 #Other stuff
-conda install rasterio osgeo numba jsonschema
+conda install rasterio osgeo numba jsonschema normflows
